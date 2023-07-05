@@ -48,7 +48,43 @@ var ShopImpl = (function () {
    */
   ShopImpl.prototype.listProductsByName = function (searchString) {
     // TODO: your implementation goes here
-    return [];
+    const getFoundProductsNames = (foundProducts) => {
+      const foundProductsNames = [];
+      
+      const sotredFoundProducts = foundProducts.sort((a, b) => {
+        if (a.name > b.name) return 1;
+        if (a.name < b.name) return -1;
+
+        return 0;
+      });
+      
+      for (let i = 0; i < sotredFoundProducts.length; i += 1) {
+        if (sotredFoundProducts[i].name === sotredFoundProducts[i + 1]?.name) {
+          foundProductsNames.push(`${sotredFoundProducts[i].producer} - ${sotredFoundProducts[i].name}`);
+          foundProductsNames.push(`${sotredFoundProducts[i + 1].producer} - ${sotredFoundProducts[i + 1].name}`);
+          
+          i += 1;
+        } else {
+          foundProductsNames.push(sotredFoundProducts[i].name);
+        }
+      }
+
+      return foundProductsNames;
+    }
+    
+    const foundProducts = [];
+    
+    for (let i = 0; i < products.length; i += 1) {
+      if (foundProducts.length === 10) return getFoundProductsNames(foundProducts);
+      
+      const currentProduct = products[i];
+      
+      if (currentProduct.name.includes(searchString)) {
+        foundProducts.push(currentProduct);
+      }
+    }
+
+    return getFoundProductsNames(foundProducts);
   };
 
   /**
