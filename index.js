@@ -48,8 +48,8 @@ var ShopImpl = (function () {
    */
   ShopImpl.prototype.listProductsByName = function (searchString) {
     // TODO: your implementation goes here
-    const getFoundProductsNames = (foundProducts) => {
-      const foundProductsNames = [];
+    const getFoundProductNames = (foundProducts) => {
+      const foundProductNames = [];
       
       const sotredFoundProducts = foundProducts.sort((a, b) => {
         if (a.name > b.name) return 1;
@@ -62,20 +62,19 @@ var ShopImpl = (function () {
         if (sotredFoundProducts[i].name === sotredFoundProducts[i + 1]?.name ||
             sotredFoundProducts[i].name === sotredFoundProducts[i - 1]?.name) 
         {
-          foundProductsNames.push(`${sotredFoundProducts[i].producer} - ${sotredFoundProducts[i].name}`);
+          foundProductNames.push(`${sotredFoundProducts[i].producer} - ${sotredFoundProducts[i].name}`);
         } else {
-          foundProductsNames.push(sotredFoundProducts[i].name);
+          foundProductNames.push(sotredFoundProducts[i].name);
         }
       }
 
-      console.log(foundProductsNames);
-      return foundProductsNames;
+      return foundProductNames;
     }
     
     const foundProducts = [];
     
     for (let i = 0; i < products.length; i += 1) {
-      if (foundProducts.length === 10) return getFoundProductsNames(foundProducts);
+      if (foundProducts.length === 10) return getFoundProductNames(foundProducts);
       
       const currentProduct = products[i];
       
@@ -84,7 +83,7 @@ var ShopImpl = (function () {
       }
     }
 
-    return getFoundProductsNames(foundProducts);
+    return getFoundProductNames(foundProducts);
   };
 
   /**
