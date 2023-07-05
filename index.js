@@ -59,16 +59,16 @@ var ShopImpl = (function () {
       });
       
       for (let i = 0; i < sotredFoundProducts.length; i += 1) {
-        if (sotredFoundProducts[i].name === sotredFoundProducts[i + 1]?.name) {
+        if (sotredFoundProducts[i].name === sotredFoundProducts[i + 1]?.name ||
+            sotredFoundProducts[i].name === sotredFoundProducts[i - 1]?.name) 
+        {
           foundProductsNames.push(`${sotredFoundProducts[i].producer} - ${sotredFoundProducts[i].name}`);
-          foundProductsNames.push(`${sotredFoundProducts[i + 1].producer} - ${sotredFoundProducts[i + 1].name}`);
-          
-          i += 1;
         } else {
           foundProductsNames.push(sotredFoundProducts[i].name);
         }
       }
 
+      console.log(foundProductsNames);
       return foundProductsNames;
     }
     
