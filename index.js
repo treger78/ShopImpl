@@ -43,6 +43,15 @@ var ShopImpl = (function () {
     return false;
   };
 
+  const sortFoundProductsByProperty = (foundProducts, property) => {
+    return foundProducts.sort((a, b) => {
+      if (a[property] > b[property]) return 1;
+      if (a[property] < b[property]) return -1;
+
+      return 0;
+    });
+  };
+
   const listProductsByProperty = (products, callback, property, searchString) => {
     const foundProducts = [];
     
@@ -65,12 +74,7 @@ var ShopImpl = (function () {
     const getFoundProductNames = (foundProducts) => {
       const foundProductNames = [];
       
-      const sotredFoundProducts = foundProducts.sort((a, b) => {
-        if (a.name > b.name) return 1;
-        if (a.name < b.name) return -1;
-
-        return 0;
-      });
+      const sotredFoundProducts = sortFoundProductsByProperty(foundProducts, 'name');
       
       for (let i = 0; i < sotredFoundProducts.length; i += 1) {
         if (sotredFoundProducts[i].name === sotredFoundProducts[i + 1]?.name ||
@@ -83,7 +87,7 @@ var ShopImpl = (function () {
       }
 
       return foundProductNames;
-    }
+    };
     
     return listProductsByProperty(products, getFoundProductNames, 'name', searchString);
   };
@@ -96,19 +100,14 @@ var ShopImpl = (function () {
     const sortFoundProductsByProducer = (foundProducts) => {
       const foundProductNames = [];
       
-      const sortedFoundProducts = foundProducts.sort((a, b) => {
-        if (a.producer > b.producer) return 1;
-        if (a.producer < b.producer) return -1;
-
-        return 0;
-      });
+      const sortedFoundProducts = sortFoundProductsByProperty(foundProducts, 'producer');
       
       for (let i = 0; i < sortedFoundProducts.length; i += 1) {
         foundProductNames.push(sortedFoundProducts[i].name);
       }
       
       return foundProductNames;
-    }
+    };
     
     return listProductsByProperty(products, sortFoundProductsByProducer, 'producer', searchString);
   };
