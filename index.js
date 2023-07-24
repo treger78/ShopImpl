@@ -91,7 +91,34 @@ var ShopImpl = (function () {
    */
   ShopImpl.prototype.listProductsByProducer = function (searchString) {
     // TODO: your implementation goes here
-    return [];
+    const sortFoundProductsByProducer = (foundProducts) => {
+      const foundProductNames = [];
+      
+      const sortedFoundProducts = foundProducts.sort((a, b) => {
+        if (a.producer > b.producer) return 1;
+        if (a.producer < b.producer) return -1;
+
+        return 0;
+      });
+      
+      for (let i = 0; i < sortedFoundProducts.length; i += 1) {
+        foundProductNames.push(sortedFoundProducts[i].name);
+      }
+      
+      return foundProductNames;
+    }
+    
+    const foundProducts = [];
+    
+    for (let i = 0; i < products.length; i += 1) {
+      if (foundProducts.length === 10) return sortFoundProductsByProducer(foundProducts);
+      
+      if (products[i].producer.includes(searchString)) {
+        foundProducts.push(products[i]);
+      }
+    }
+    
+    return sortFoundProductsByProducer(foundProducts);
   };
 
   return ShopImpl;
